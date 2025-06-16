@@ -1,2 +1,2 @@
-export declare const plugins: any[];
-export declare const browsers: string[];
+export let plugins: any[];
+export let browsers: string[];

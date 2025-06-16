@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMd5Hash = require("webpack-md5-hash");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const { prod_Path, src_Path, preview_Path } = require("./path");
 const { selectedPreprocessor } = require("./loader");
@@ -16,22 +16,14 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, prod_Path),
-    filename: "[name].[chunkhash].js",
+    filename: "[name].[contenthash].js",
   },
   //devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: "file-loader",
-          },
-        ],
-      },
-      {
-        test: /\.svg$/,
-        use: ["file-loader", "svg-transform-loader"],
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset/resource",
       },
       {
         test: /\.ts?$/,
@@ -58,9 +50,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(path.resolve(__dirname, prod_Path), {
-      root: process.cwd(),
-    }),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "style.css",
     }),
