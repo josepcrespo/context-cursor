@@ -13,13 +13,20 @@ const contextMode = (
     target: props.parallaxIndex * 1.5,
   };
   let isHovered: boolean = false;
-  let cursorTarget: HTMLElement = null;
+  let cursorTarget: HTMLElement | null = null;
 
   const isValidTarget = (el: HTMLElement | null) => {
     return !!el && el.isConnected;
   };
 
   const moveCursor = (e: MouseEvent) => {
+    if (!isHovered || !isValidTarget(cursorTarget)) {
+      TweenLite.to(cursor, props.transitionSpeed, {
+        x: e.clientX - props.radius / 2,
+        y: e.clientY - props.radius / 2,
+      });
+      return;
+    }
     // If element is not hovered
     if (!isHovered) {
       TweenLite.to(cursor, props.transitionSpeed, {
@@ -173,11 +180,13 @@ const contextMode = (
         boxShadow: "0 7px 15px rgba(0,0,0,0.0)",
       });
     }
+    cursorTarget = null;
   };
 
   // Event listeners
   document.addEventListener("mousewheel", (e: WheelEvent) => {
     handleMouseOut(e);
+    cursorTarget = null;
   });
 
   document.addEventListener("mousemove", (e: MouseEvent) => {
