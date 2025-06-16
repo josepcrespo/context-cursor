@@ -15,7 +15,7 @@
     "build:dev": "webpack-dev-server --env dev --mode none",
     "build:prod": "webpack --env prod --mode production",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:dist": "npm run build:types && webpack --config webpack/webpack.dist.js --mode production"
+    "build:dist": "npm run build:types && webpack --config webpack/webpack.dist.js --mode production && node ./generate-dist-index-dts.js"
   },
   "author": "mwieth",
   "license": "MIT",
