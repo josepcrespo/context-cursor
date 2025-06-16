@@ -1,2 +1,2 @@
-export let plugins: any[];
+export let plugins: typeof import("autoprefixer")[];
 export let browsers: string[];
