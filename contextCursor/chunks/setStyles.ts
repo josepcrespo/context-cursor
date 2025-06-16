@@ -28,7 +28,7 @@ body {
 
 const setStyles = () => {
   var styleSheet = document.createElement("style");
-  styleSheet.appendChild(document.createTextNode(styles));
+  styleSheet.textContent = styles;
   document.head.appendChild(styleSheet);
 };
 
