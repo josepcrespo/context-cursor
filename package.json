@@ -2,11 +2,19 @@
   "name": "context-cursor",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "contextCursor/types/index.d.ts",
+  "files": [
+    "lib",
+    "contextCursor",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "npm run build:dev",
     "build:dev": "webpack-dev-server --env dev --mode none",
-    "build:prod": "webpack --env prod --mode production"
+    "build:prod": "webpack --env prod --mode production",
+    "build:dist": "webpack --config webpack/webpack.dist.js --mode production"
   },
   "author": "mwieth",
   "license": "MIT",
@@ -22,9 +30,8 @@
     "gsap": "^3.4.2",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.14.1",
     "postcss-loader": "^3.0.0",
-    "sass-loader": "^9.0.3",
+    "sass": "^1.89.2",
     "style-loader": "^1.2.1",
     "svg-transform-loader": "^2.0.13",
     "ts-loader": "^8.0.2",
