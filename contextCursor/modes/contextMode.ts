@@ -15,6 +15,10 @@ const contextMode = (
   let isHovered: boolean = false;
   let cursorTarget: HTMLElement = null;
 
+  const isValidTarget = (el: HTMLElement | null) => {
+    return !!el && el.isConnected;
+  };
+
   const moveCursor = (e: MouseEvent) => {
     // If element is not hovered
     if (!isHovered) {
@@ -23,7 +27,7 @@ const contextMode = (
         y: e.clientY - props.radius / 2,
       });
       // If eleemnt is hovered
-    } else {
+    } else if (isValidTarget(cursorTarget)) {
       const borderRadius = Number(
         window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any
       );
@@ -128,6 +132,7 @@ const contextMode = (
   const handleMouseOver = (e: MouseEvent) => {
     isHovered = true;
     cursorTarget = e.target as HTMLElement;
+    if (!isValidTarget(cursorTarget)) return;
     const borderRadius = Number(
       window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any
     );
@@ -160,12 +165,14 @@ const contextMode = (
       backgroundImage: "none",
       filter: "blur(0px)",
     });
-    TweenLite.to(cursorTarget, props.transitionSpeed, {
-      x: 0,
-      y: 0,
-      scale: 1,
-      boxShadow: "0 7px 15px rgba(0,0,0,0.0)",
-    });
+    if (isValidTarget(cursorTarget)) {
+      TweenLite.to(cursorTarget, props.transitionSpeed, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        boxShadow: "0 7px 15px rgba(0,0,0,0.0)",
+      });
+    }
   };
 
   // Event listeners
