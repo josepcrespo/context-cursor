@@ -1,6 +1,7 @@
 import { addCursor, setStyles } from "./chunks";
 import contextMode from "./modes/contextMode";
 import propNames from "./propNames";
+import type { CProps } from './types';
 
 const contextCursor = (props: CProps = {}) => {
   // Default props
@@ -25,3 +26,4 @@ const contextCursor = (props: CProps = {}) => {
 };
 
 export default contextCursor;
+export type { CProps } from './types';

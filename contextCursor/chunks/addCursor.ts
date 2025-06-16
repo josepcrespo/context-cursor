@@ -1,3 +1,5 @@
+import type { CProps } from '../types';
+
 const addCursor = (props: CProps) => {
   if (props) {
     const contextCursor = document.createElement("div");

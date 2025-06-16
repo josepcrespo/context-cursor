@@ -1,14 +1,7 @@
 const path = require('path');
 
-module.exports = {
+const baseConfig = {
   entry: './contextCursor/index.ts',
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: 'index.js',
-    library: 'ContextCursor',
-    libraryTarget: 'umd',
-    globalObject: 'this'
-  },
   resolve: {
     extensions: ['.ts', '.js'],
   },
@@ -24,3 +17,31 @@ module.exports = {
   externals: {},
   mode: 'production'
 };
+
+const umdConfig = {
+  ...baseConfig,
+  output: {
+    path: path.resolve(__dirname, '../dist'),
+    filename: 'index.umd.js',
+    library: 'ContextCursor',
+    libraryTarget: 'umd',
+    globalObject: 'this'
+  }
+};
+
+const esmConfig = {
+  ...baseConfig,
+  output: {
+    path: path.resolve(__dirname, '../dist'),
+    filename: 'index.esm.js',
+    library: {
+      type: 'module'
+    },
+    module: true
+  },
+  experiments: {
+    outputModule: true
+  }
+};
+
+module.exports = [umdConfig, esmConfig];

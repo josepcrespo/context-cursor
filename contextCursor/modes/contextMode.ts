@@ -1,6 +1,7 @@
 import { TweenLite } from "gsap";
 import { getMoveIndex, isElHasProperty, getStyleProp } from "../chunks";
 import propNames from "../propNames";
+import type { CProps } from '../types';
 
 const contextMode = (
   cursor: HTMLElement,
