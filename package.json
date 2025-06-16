@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "types": "contextCursor/types/index.d.ts",
+  "types": "dist/contextCursor/index.d.ts",
   "files": [
     "lib",
     "contextCursor",
@@ -14,7 +14,8 @@
     "start": "npm run build:dev",
     "build:dev": "webpack-dev-server --env dev --mode none",
     "build:prod": "webpack --env prod --mode production",
-    "build:dist": "webpack --config webpack/webpack.dist.js --mode production"
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:dist": "npm run build:types && webpack --config webpack/webpack.dist.js --mode production"
   },
   "author": "mwieth",
   "license": "MIT",

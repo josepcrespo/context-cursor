@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "declaration": true,
+    "declarationDir": "./dist/",
+    "emitDeclarationOnly": false,
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
