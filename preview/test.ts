@@ -1,8 +1,8 @@
 import "./scss/styles.scss";
 import contextCursor from "../contextCursor";
 
-// Init context cursor
-contextCursor();
+// Init context cursor (updated API)
+contextCursor.init();
 
 // Darkmode
 const darkmodeBtn = document.getElementById("darkmode-button");
