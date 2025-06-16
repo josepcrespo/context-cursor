@@ -19,6 +19,9 @@ const contextMode = (
     return !!el && el.isConnected;
   };
 
+  // Listeners para cleanup
+  const cleanupFns: (() => void)[] = [];
+
   const moveCursor = (e: MouseEvent) => {
     if (!isHovered || !isValidTarget(cursorTarget)) {
       gsap.to(cursor, { duration: props.transitionSpeed, x: e.clientX - props.radius / 2, y: e.clientY - props.radius / 2 });
@@ -173,26 +176,36 @@ const contextMode = (
   };
 
   // Event listeners
-  document.addEventListener("mousewheel", (e: WheelEvent) => {
-    handleMouseOut(e);
+  const onWheel = (e: WheelEvent) => {
+    handleMouseOut(e as any);
     cursorTarget = null;
-  });
-
-  document.addEventListener("mousemove", (e: MouseEvent) => {
+  };
+  const onMouseMove = (e: MouseEvent) => {
     moveCursor(e);
+  };
+
+  document.addEventListener("mousewheel", onWheel);
+  document.addEventListener("mousemove", onMouseMove);
+  cleanupFns.push(() => {
+    document.removeEventListener("mousewheel", onWheel);
+    document.removeEventListener("mousemove", onMouseMove);
   });
 
   interactElements.forEach((item) => {
-    item.addEventListener("mouseenter", (e: MouseEvent) => {
-      handleMouseOver(e);
+    const onEnter = (e: MouseEvent) => handleMouseOver(e);
+    const onLeave = (e: MouseEvent) => handleMouseOut(e);
+    item.addEventListener("mouseenter", onEnter);
+    item.addEventListener("mouseleave", onLeave);
+    cleanupFns.push(() => {
+      item.removeEventListener("mouseenter", onEnter);
+      item.removeEventListener("mouseleave", onLeave);
     });
   });
 
-  interactElements.forEach((item) => {
-    item.addEventListener("mouseleave", (e: MouseEvent) => {
-      handleMouseOut(e);
-    });
-  });
+  // Devuelve función de cleanup
+  return () => {
+    cleanupFns.forEach(fn => fn());
+  };
 };
 
 export default contextMode;

@@ -71,7 +71,9 @@ function init(props: CProps = {}) {
   const interactElements = document.querySelectorAll(
     `[${propNames.dataAttr}]`
   ) as NodeListOf<Element>;
-  interactElements.forEach(bind);
+  // Guardar cleanup global de contextMode
+  const unbind = contextMode(cursorEl, propsRef, interactElements);
+  if (typeof unbind === 'function') cleanupFns.push(unbind);
   // Observar nuevos elementos
   observeNewElements();
 }
