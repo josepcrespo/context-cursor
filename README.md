@@ -70,21 +70,24 @@ onUnmounted(() => {
 
 ---
 
-## Custom scale for lift effect
+## Custom scale for any effect
 
-You can now set a custom scale for the `lift` effect using the `data-ccursor-scale` attribute:
+You can set a custom scale for the cursor using the `data-ccursor-scale` attribute, regardless of the effect (lift, morph, noParallax, noPadding, or any combination):
 
 ```html
-<!-- Default lift (scale 1.1) -->
+<!-- Default scale (1 for morph, 1.1 for lift) -->
 <button data-ccursor="lift">Lift Button</button>
+<button data-ccursor>Normal Button</button>
 
 <!-- Custom scale (e.g. 1.3) -->
 <button data-ccursor="lift" data-ccursor-scale="1.3">Big Lift Button</button>
+<button data-ccursor data-ccursor-scale="1.2">Big Morph Button</button>
+<button data-ccursor="noParallax" data-ccursor-scale="1.5">No Parallax, Big</button>
 ```
 
 - The value of `data-ccursor-scale` must be a number (e.g. `1.2`, `1.5`, etc).
-- If not provided, the default is `1.1`.
-- You can combine it with other local attributes, for example: `<button data-ccursor="lift noParallax" data-ccursor-scale="1.3">`.
+- If not provided, the default is `1.1` for lift and `1` for other effects.
+- You can combine it with any other local attributes.
 - You can also set or update the scale dynamically from JS:
   ```js
   el.setAttribute('data-ccursor-scale', '1.5');

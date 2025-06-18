@@ -24,15 +24,16 @@ const contextMode = (
 
   const moveCursor = (e: MouseEvent) => {
     if (!isHovered || !isValidTarget(cursorTarget)) {
-      gsap.to(cursor, { duration: props.transitionSpeed, x: e.clientX - props.radius / 2, y: e.clientY - props.radius / 2 });
+      const scaleValue = getScaleFromAttr(cursorTarget || cursor) || 1;
+      gsap.to(cursor, { duration: props.transitionSpeed, x: e.clientX - props.radius / 2, y: e.clientY - props.radius / 2, scale: scaleValue });
       return;
     }
     if (!cursorTarget) return;
     const borderRadius = Number(
       window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any
     );
+    const scaleValue = getScaleFromAttr(cursorTarget) ||  (isElHasProperty(cursorTarget, propNames.lift) ? 1.1 : 1);
     if (isElHasProperty(cursorTarget, propNames.lift)) {
-      const scaleValue = getScaleFromAttr(cursorTarget) || 1.1;
       gsap.to(cursorTarget, {
         duration: props.transitionSpeed,
         x: getMoveIndex(
@@ -70,6 +71,7 @@ const contextMode = (
         }px ${
           e.clientY - cursorTarget.getBoundingClientRect().top
         }px, rgba(255,255,255,0.4), rgba(255,255,255,0))`,
+        scale: scaleValue,
       });
     } else {
       gsap.to(cursor, {
@@ -109,6 +111,7 @@ const contextMode = (
           (isElHasProperty(cursorTarget, propNames.noPadding)
             ? 0
             : props.hoverPadding * 2),
+        scale: scaleValue,
       });
       if (!isElHasProperty(cursorTarget, propNames.noParallax)) {
         gsap.to(cursorTarget, {
@@ -125,6 +128,7 @@ const contextMode = (
             cursorTarget.clientHeight,
             parallaxSpeed.target
           ),
+          scale: scaleValue,
         });
       }
     }
@@ -135,8 +139,8 @@ const contextMode = (
     cursorTarget = e.target as HTMLElement;
     if (!isValidTarget(cursorTarget)) return;
     const borderRadius = parseFloat(window.getComputedStyle(cursorTarget).borderRadius);
+    const scaleValue = getScaleFromAttr(cursorTarget) || (isElHasProperty(cursorTarget, propNames.lift) ? 1.1 : 1);
     if (isElHasProperty(cursorTarget, propNames.lift)) {
-      const scaleValue = getScaleFromAttr(cursorTarget) || 1.1;
       cursor.classList.add("c-cursor-lift_active");
       gsap.to(cursor, {
         duration: props.transitionSpeed,
@@ -147,6 +151,13 @@ const contextMode = (
       });
     } else {
       cursor.classList.add("c-cursor_active");
+      gsap.to(cursor, {
+        duration: props.transitionSpeed,
+        borderRadius: borderRadius,
+        width: cursorTarget.clientWidth,
+        height: cursorTarget.clientHeight,
+        scale: scaleValue,
+      });
     }
   };
 
