@@ -1,3 +1,6 @@
+import MiniCssExtractPlugin = require("mini-css-extract-plugin");
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import HtmlWebpackPlugin = require("html-webpack-plugin");
 export namespace entry {
     let main: string;
 }
@@ -28,4 +31,4 @@ export namespace module {
         exclude?: undefined;
     })[];
 }
-export let plugins: any[];
+export let plugins: (MiniCssExtractPlugin | CleanWebpackPlugin | HtmlWebpackPlugin)[];

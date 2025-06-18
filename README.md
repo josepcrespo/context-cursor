@@ -98,3 +98,24 @@ You can set a custom scale for the cursor using the `data-ccursor-scale` attribu
 ## Demo and usage
 
 ## 👉🏽 [pavellaptev.github.io/context-cursor](https://pavellaptev.github.io/context-cursor/) 👈🏽
+
+---
+
+## NPM/Yarn scripts (English)
+
+Available project scripts defined in the `package.json` file. These commands streamline development, testing, and production workflows for the project:
+
+| Command                | Description                                                                                                 |
+|------------------------|-------------------------------------------------------------------------------------------------------------|
+| `npm start`            | Alias for `npm run build:dev`. Launches the development server with hot reloading for rapid prototyping.    |
+| `npm run build:dev`    | Starts the Webpack development server. Use this for local development and live preview of your changes.     |
+| `npm run build:prod`   | Builds the production-ready bundle in the `lib/` directory and generates `/index.html` at the project root. |
+| `npm run build:types`  | Generates TypeScript declaration files (`.d.ts`) in the `dist/` directory.                                   |
+| `npm run build:dist`   | Produces both ESM and UMD bundles in `dist/` and generates type declarations for npm/CDN distribution.      |
+
+**Usage recommendations:**
+- Use `npm start` or `npm run build:dev` for local development and testing. This provides fast feedback and live reload.
+- Use `npm run build:prod` to create a minified, production-ready build and update the root `/index.html` for deployment or demo.
+- Use `npm run build:dist` when preparing the package for npm publication or CDN usage, ensuring all types and bundles are up to date.
+
+---

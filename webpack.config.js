@@ -1,6 +1,14 @@
-const env = process.env.NODE_ENV
+const getMode = env => {
+  if (typeof env === 'string') return env;
+  if (env && typeof env === 'object') {
+    if (env.prod) return 'prod';
+    if (env.dev) return 'dev';
+  }
+  return 'dev';
+};
 
 module.exports = env => {
-  console.log(`🛠️  running ${env} Mode using ./webpack/webpack.${env}.js 🛠️`);
-  return require(`./webpack/webpack.${env}.js`);
+  const mode = getMode(env);
+  console.log(`🛠️  running ${mode} Mode using ./webpack/webpack.${mode}.js 🛠️`);
+  return require(`./webpack/webpack.${mode}.js`);
 };

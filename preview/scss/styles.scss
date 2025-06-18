@@ -205,9 +205,9 @@ pre {
 
 .btn-wrap {
   display: flex;
+  flex-direction: column;
   @media screen and (max-width: 800px) {
     justify-content: center;
-    flex-direction: column;
   }
 }
 

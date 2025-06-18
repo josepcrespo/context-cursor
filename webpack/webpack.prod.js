@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const WebpackMd5Hash = require("webpack-md5-hash");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
@@ -60,6 +59,5 @@ module.exports = {
       template: "./" + preview_Path + "/index.html",
       filename: "../index.html",
     }),
-    new WebpackMd5Hash(),
   ],
 };
