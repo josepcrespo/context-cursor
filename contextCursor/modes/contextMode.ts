@@ -32,6 +32,7 @@ const contextMode = (
       window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any
     );
     if (isElHasProperty(cursorTarget, propNames.lift)) {
+      const scaleValue = getScaleFromAttr(cursorTarget) || 1.1;
       gsap.to(cursorTarget, {
         duration: props.transitionSpeed,
         x: getMoveIndex(
@@ -46,7 +47,7 @@ const contextMode = (
           cursorTarget.clientHeight,
           parallaxSpeed.target
         ),
-        scale: 1.1,
+        scale: scaleValue,
         boxShadow: getStyleProp("--ghost-shadow"),
       });
       gsap.to(cursor, {
@@ -135,13 +136,14 @@ const contextMode = (
     if (!isValidTarget(cursorTarget)) return;
     const borderRadius = parseFloat(window.getComputedStyle(cursorTarget).borderRadius);
     if (isElHasProperty(cursorTarget, propNames.lift)) {
+      const scaleValue = getScaleFromAttr(cursorTarget) || 1.1;
       cursor.classList.add("c-cursor-lift_active");
       gsap.to(cursor, {
         duration: props.transitionSpeed,
         borderRadius: borderRadius,
         width: cursorTarget.clientWidth,
         height: cursorTarget.clientHeight,
-        scale: 1.1,
+        scale: scaleValue,
       });
     } else {
       cursor.classList.add("c-cursor_active");
@@ -209,3 +211,11 @@ const contextMode = (
 };
 
 export default contextMode;
+
+const getScaleFromAttr = (el: HTMLElement): number | null => {
+  const attr = el.getAttribute('data-ccursor-scale');
+  if (!attr) return null;
+  const val = parseFloat(attr);
+  if (!isNaN(val)) return val;
+  return null;
+};

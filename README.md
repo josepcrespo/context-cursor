@@ -70,6 +70,28 @@ onUnmounted(() => {
 
 ---
 
+## Custom scale for lift effect
+
+You can now set a custom scale for the `lift` effect using the `data-ccursor-scale` attribute:
+
+```html
+<!-- Default lift (scale 1.1) -->
+<button data-ccursor="lift">Lift Button</button>
+
+<!-- Custom scale (e.g. 1.3) -->
+<button data-ccursor="lift" data-ccursor-scale="1.3">Big Lift Button</button>
+```
+
+- The value of `data-ccursor-scale` must be a number (e.g. `1.2`, `1.5`, etc).
+- If not provided, the default is `1.1`.
+- You can combine it with other local attributes, for example: `<button data-ccursor="lift noParallax" data-ccursor-scale="1.3">`.
+- You can also set or update the scale dynamically from JS:
+  ```js
+  el.setAttribute('data-ccursor-scale', '1.5');
+  ```
+
+---
+
 ## Demo and usage
 
 ## 👉🏽 [pavellaptev.github.io/context-cursor](https://pavellaptev.github.io/context-cursor/) 👈🏽
