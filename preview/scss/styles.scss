@@ -118,6 +118,7 @@ pre {
 
 .title {
   max-width: 640px;
+  -webkit-user-select: none;
   user-select: none;
   &-header {
     font-family: "Roboto Condensed", sans-serif;
