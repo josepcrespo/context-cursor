@@ -101,7 +101,7 @@ You can set a custom scale for the cursor using the `data-ccursor-scale` attribu
 
 ---
 
-## NPM/Yarn scripts (English)
+## NPM/Yarn project scripts
 
 Available project scripts defined in the `package.json` file. These commands streamline development, testing, and production workflows for the project:
 
