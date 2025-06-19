@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "allowJs": true,
     "declaration": true,
     "declarationDir": "./dist/",
     "emitDeclarationOnly": false,
-    "sourceMap": true,
-    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
-    "target": "es5",
-    "allowJs": true,
-    "typeRoots": ["contextCursor/types", "node_modules/@types"],
+    "noImplicitAny": true,
+    "outDir": "./dist/",
+    "sourceMap": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true
+    "target": "es5",
+    "typeRoots": [
+      "contextCursor/types",
+      "node_modules/@types"
+    ]
   }
 }
