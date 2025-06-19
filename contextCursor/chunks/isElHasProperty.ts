@@ -1,7 +1,8 @@
 import propNames from "../propNames";
 
 const isElHasProperty = (el: HTMLElement, property: string) => {
-  if (el.getAttribute(propNames.dataAttr).includes(property)) {
+  const attr = el.getAttribute(propNames.dataAttr);
+  if (attr && attr.includes(property)) {
     return true;
   } else {
     return false;

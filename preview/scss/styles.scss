@@ -1,5 +1,5 @@
+@use "./mixins" as *;
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:wght@300;400;700&family=Roboto+Mono:wght@400;700&display=swap");
-@import "./mixins";
 
 :root {
   --background-clr: #fff;
@@ -234,15 +234,12 @@ pre {
   }
   &-primary {
     @include btn;
-    background: var(--primary-clr);
   }
   &-transparent {
     @include btn;
-    background-color: transparent;
   }
   &-colormode {
     @include btn;
-    background: var(--primary-clr);
     &:hover {
       .moon-icon {
         &::after {
@@ -261,6 +258,16 @@ pre {
       }
     }
   }
+}
+
+.btn-primary {
+  background: var(--primary-clr);
+}
+.btn-transparent {
+  background-color: transparent;
+}
+.btn-colormode {
+  background: var(--primary-clr);
 }
 
 .moon-icon {

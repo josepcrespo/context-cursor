@@ -13,12 +13,15 @@ const strings = {
   lightmode: "Light Mode",
 };
 
-darkmodeBtn.addEventListener("click", (e) => {
-  darkmodeBtn.getElementsByTagName("span")[0].textContent === strings.darkmode
-    ? (darkmodeBtn.getElementsByTagName("span")[0].textContent =
-        strings.lightmode)
-    : (darkmodeBtn.getElementsByTagName("span")[0].textContent =
-        strings.darkmode);
-  document.body.classList.toggle("darkmode");
-  moonIcon.classList.toggle("moon-icon_active");
-});
+if (darkmodeBtn && moonIcon) {
+  darkmodeBtn.addEventListener("click", (e) => {
+    const span = darkmodeBtn.getElementsByTagName("span")[0];
+    if (span.textContent === strings.darkmode) {
+      span.textContent = strings.lightmode;
+    } else {
+      span.textContent = strings.darkmode;
+    }
+    document.body.classList.toggle("darkmode");
+    moonIcon.classList.toggle("moon-icon_active");
+  });
+}

@@ -8,9 +8,14 @@ const contextMode = (
   props: CProps,
   interactElements: NodeListOf<Element>
 ) => {
+  // Garantiza valores por defecto para props
+  const radius = props.radius ?? 20;
+  const transitionSpeed = props.transitionSpeed ?? 0.2;
+  const parallaxIndex = props.parallaxIndex ?? 10;
+  const hoverPadding = props.hoverPadding ?? 6;
   const parallaxSpeed = {
-    cursor: props.parallaxIndex,
-    target: props.parallaxIndex * 1.5,
+    cursor: parallaxIndex,
+    target: parallaxIndex * 1.5,
   };
   let isHovered: boolean = false;
   let cursorTarget: HTMLElement | null = null;
@@ -25,7 +30,7 @@ const contextMode = (
   const moveCursor = (e: MouseEvent) => {
     if (!isHovered || !isValidTarget(cursorTarget)) {
       const scaleValue = getScaleFromAttr(cursorTarget || cursor) || 1;
-      gsap.to(cursor, { duration: props.transitionSpeed, x: e.clientX - props.radius / 2, y: e.clientY - props.radius / 2, scale: scaleValue });
+      gsap.to(cursor, { duration: transitionSpeed, x: e.clientX - radius / 2, y: e.clientY - radius / 2, scale: scaleValue });
       return;
     }
     if (!cursorTarget) return;
@@ -35,7 +40,7 @@ const contextMode = (
     const scaleValue = getScaleFromAttr(cursorTarget) ||  (isElHasProperty(cursorTarget, propNames.lift) ? 1.1 : 1);
     if (isElHasProperty(cursorTarget, propNames.lift)) {
       gsap.to(cursorTarget, {
-        duration: props.transitionSpeed,
+        duration: transitionSpeed,
         x: getMoveIndex(
           e.clientX,
           cursorTarget.getBoundingClientRect().left,
@@ -52,7 +57,7 @@ const contextMode = (
         boxShadow: getStyleProp("--ghost-shadow"),
       });
       gsap.to(cursor, {
-        duration: props.transitionSpeed,
+        duration: transitionSpeed,
         filter: "blur(8px)",
         x:
           cursorTarget.getBoundingClientRect().left +
@@ -75,12 +80,12 @@ const contextMode = (
       });
     } else {
       gsap.to(cursor, {
-        duration: props.transitionSpeed,
+        duration: transitionSpeed,
         x:
           cursorTarget.getBoundingClientRect().left -
           (isElHasProperty(cursorTarget, propNames.noPadding)
             ? 0
-            : props.hoverPadding) +
+            : hoverPadding) +
           (isElHasProperty(cursorTarget, propNames.noParallax)
             ? 0
             : (e.clientX -
@@ -91,7 +96,7 @@ const contextMode = (
           cursorTarget.getBoundingClientRect().top -
           (isElHasProperty(cursorTarget, propNames.noPadding)
             ? 0
-            : props.hoverPadding) +
+            : hoverPadding) +
           (isElHasProperty(cursorTarget, propNames.noParallax)
             ? 0
             : (e.clientY -
@@ -105,17 +110,17 @@ const contextMode = (
           cursorTarget.clientWidth +
           (isElHasProperty(cursorTarget, propNames.noPadding)
             ? 0
-            : props.hoverPadding * 2),
+            : hoverPadding * 2),
         height:
           cursorTarget.clientHeight +
           (isElHasProperty(cursorTarget, propNames.noPadding)
             ? 0
-            : props.hoverPadding * 2),
+            : hoverPadding * 2),
         scale: scaleValue,
       });
       if (!isElHasProperty(cursorTarget, propNames.noParallax)) {
         gsap.to(cursorTarget, {
-          duration: props.transitionSpeed,
+          duration: transitionSpeed,
           x: -getMoveIndex(
             e.clientX,
             cursorTarget.getBoundingClientRect().left,
@@ -143,7 +148,7 @@ const contextMode = (
     if (isElHasProperty(cursorTarget, propNames.lift)) {
       cursor.classList.add("c-cursor-lift_active");
       gsap.to(cursor, {
-        duration: props.transitionSpeed,
+        duration: transitionSpeed,
         borderRadius: borderRadius,
         width: cursorTarget.clientWidth,
         height: cursorTarget.clientHeight,
@@ -152,7 +157,7 @@ const contextMode = (
     } else {
       cursor.classList.add("c-cursor_active");
       gsap.to(cursor, {
-        duration: props.transitionSpeed,
+        duration: transitionSpeed,
         borderRadius: borderRadius,
         width: cursorTarget.clientWidth,
         height: cursorTarget.clientHeight,
@@ -166,19 +171,19 @@ const contextMode = (
     cursor.classList.remove("c-cursor_active");
     cursor.classList.remove("c-cursor-lift_active");
     gsap.to(cursor, {
-      duration: props.transitionSpeed,
-      x: e.clientX - props.radius / 2,
-      y: e.clientY - props.radius / 2,
-      width: props.radius,
-      height: props.radius,
+      duration: transitionSpeed,
+      x: e.clientX - radius / 2,
+      y: e.clientY - radius / 2,
+      width: radius,
+      height: radius,
       borderRadius: "100px",
       scale: 1,
       backgroundImage: "none",
       filter: "blur(0px)",
     });
     if (isValidTarget(cursorTarget)) {
-      gsap.to(cursorTarget, {
-        duration: props.transitionSpeed,
+      gsap.to(cursorTarget as HTMLElement, {
+        duration: transitionSpeed,
         x: 0,
         y: 0,
         scale: 1,
@@ -189,24 +194,24 @@ const contextMode = (
   };
 
   // Event listeners
-  const onWheel = (e: WheelEvent) => {
-    handleMouseOut(e as any);
+  const onWheel: EventListener = (e) => {
+    handleMouseOut(e as MouseEvent);
     cursorTarget = null;
   };
-  const onMouseMove = (e: MouseEvent) => {
-    moveCursor(e);
+  const onMouseMove: EventListener = (e) => {
+    moveCursor(e as MouseEvent);
   };
 
-  document.addEventListener("mousewheel", onWheel);
+  document.addEventListener("wheel", onWheel);
   document.addEventListener("mousemove", onMouseMove);
   cleanupFns.push(() => {
-    document.removeEventListener("mousewheel", onWheel);
+    document.removeEventListener("wheel", onWheel);
     document.removeEventListener("mousemove", onMouseMove);
   });
 
   interactElements.forEach((item) => {
-    const onEnter = (e: MouseEvent) => handleMouseOver(e);
-    const onLeave = (e: MouseEvent) => handleMouseOut(e);
+    const onEnter: EventListener = (e) => handleMouseOver(e as MouseEvent);
+    const onLeave: EventListener = (e) => handleMouseOut(e as MouseEvent);
     item.addEventListener("mouseenter", onEnter);
     item.addEventListener("mouseleave", onLeave);
     cleanupFns.push(() => {
